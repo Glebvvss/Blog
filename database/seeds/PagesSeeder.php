@@ -15,6 +15,8 @@ class PagesSeeder extends Seeder
         	ContactPageSeeder::class,
         	IndexPageSeeder::class,
         	AboutPageSeeder::class,
+            LoginPageSeeder::class,
+            RegistrationPageSeeder::class,
         ]);
     }
 }

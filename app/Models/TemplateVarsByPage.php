@@ -4,9 +4,8 @@ namespace App\Models;
 
 use DB;
 
-/**
- * This class using for get variables per template page from DB
- */
+
+
 class TemplateVarsByPage {
 
 	private $tableName;

@@ -13,7 +13,7 @@
 
 					<br>
 
-					<?php if( Auth::check() ) : ?>
+					@if( Auth::check() )
 					<h2>Your Comment:</h2>
 					<form class="form-comment">
 						<hr>
@@ -24,7 +24,7 @@
 						</div>
 						<button id-parent-comment="0" class="btn btn-primary add-btn-comment">Submit</button>
 					</form>
-					<?php endif; ?>
+					@endif
 
 				</div>
 			</div>
@@ -43,11 +43,11 @@
 						<b><?php echo $comment['user']['name'] ?> </b>
 
 						<?php if( Auth::check() ) : ?>
-						<a href="" class="action-comments-link reply" id-comment-form-show="<?php echo $comment['id'] ?>">reply</a> 
-						<?php endif; ?>
-
-						<?php if (Auth::user()->id === $comment['user_id'] ) : ?>
-						<a href="" class="action-comments-link delete-comment" id-delete-comment="<?php echo $comment['id'] ?>">delete</a> 
+							<a href="" class="action-comments-link reply" id-comment-form-show="<?php echo $comment['id'] ?>">reply</a> 
+							
+							<?php if (Auth::user()->id === $comment['user_id'] ) : ?>
+							<a href="" class="action-comments-link delete-comment" id-delete-comment="<?php echo $comment['id'] ?>">delete</a> 
+							<?php endif; ?>
 						<?php endif; ?>
 
 					</span>

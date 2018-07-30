@@ -17,14 +17,9 @@ class AuthController extends Controller {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
-        ]);        
+        ]);
 
         $request->flashOnly('email');
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }        
-
         $validator->after(function($validator) use ($request) {
             if ( !Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
                 $validator->errors()->add('password', 'Incorrect email or password!');
@@ -34,7 +29,6 @@ class AuthController extends Controller {
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
         }
-
         return redirect('/');
     }
 
@@ -45,7 +39,7 @@ class AuthController extends Controller {
         return redirect('/');
     }
 
-    public function registration(Request $request) {        
+    public function registration(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
@@ -54,11 +48,6 @@ class AuthController extends Controller {
         ]);
 
         $request->flashOnly(['name', 'email']);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }        
-
         $validator->after(function($validator) use ($request) {
             if ( $request->password !== $request->confirm_password ) { 
                 $validator->errors()->add('password', 'Passwords does not match!');

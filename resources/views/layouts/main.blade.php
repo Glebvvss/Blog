@@ -127,7 +127,12 @@
 
     <!-- Custom scripts for this template -->
     <script src="{{ asset('js/clean-blog.min.js') }}"></script>
-    <script src="{{ asset('js/components/comments.js') }}"></script>
+
+    <!-- for single post page -->
+    <script src="{{ asset('js/components/single-post/comments.js') }}"></script>
+
+    <!-- for index page -->
+    <script src="{{ asset('js/components/index/list-of-posts.js') }}"></script>
     @show    
 
   </body>

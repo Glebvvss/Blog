@@ -12,22 +12,12 @@ use App\Models\TemplateVarsByPage;
 class PagesController extends Controller {
 
     public function indexPage() {
-        $posts = Post::with('user')->orderBy('date_post', 'desc')->get();
-
-        //adaptation date format
-        foreach ( $posts as $post ) {
-            $date = new DateTime($post->date_post);
-            $date_post = $date->format('Y F j');
-            $post->date_post = $date_post;
-        }
-
         $vars = new TemplateVarsByPage('index');
         return view('index', [
             'title'          => $vars->templateVar('title'),
             'caption'        => $vars->templateVar('caption_page'),
             'description'    => $vars->templateVar('description_page'),
             'background_img' => $vars->templateVar('background_img'),
-            'posts'          => $posts,
         ]);
     }
 
@@ -65,7 +55,7 @@ class PagesController extends Controller {
     }
 
     public function loginPage(Request $request) {
-        $vars = new TemplateVarsByPage('contact');
+        $vars = new TemplateVarsByPage('login');
         return view('login', [
             'title'          => $vars->templateVar('title'),
             'caption'        => $vars->templateVar('caption_page'),
@@ -75,7 +65,7 @@ class PagesController extends Controller {
     }
 
     public function registrationPage() {
-        $vars = new TemplateVarsByPage('contact');
+        $vars = new TemplateVarsByPage('registration');
         return view('registration', [
             'title'          => $vars->templateVar('title'),
             'caption'        => $vars->templateVar('caption_page'),

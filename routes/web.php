@@ -6,7 +6,7 @@ Route::group(['as' => 'pages'], function() {
 	Route::get('/about', 'PagesController@aboutPage');
 	Route::get('/contact', 'PagesController@contactPage');
 
-	//auth routes
+	//routes to auth pages
 	Route::get('/login', 'PagesController@loginPage');
 	Route::get('/registration', 'PagesController@registrationPage');
 });
@@ -17,10 +17,14 @@ Route::group(['as' => 'auth'], function() {
 	Route::post('/registration-action', 'AuthController@registration');
 });
 
+Route::group(['as' => 'index'], function() {
+	Route::get('/get-list-of-posts-component', 'PostController@getListOfPostsComponent')->middleware('ajax');
+});
+
 Route::group(['as' => 'comments.'], function() {
-	Route::get('/get-comments-component', 'CommentsController@getCommentsComponent');
-	Route::post('/add-comment', 'CommentsController@addComment');//->middleware('auth');
-	Route::post('/drop-comment', 'CommentsController@dropComment');//->middleware('auth');
+	Route::get('/get-comments-component', 'CommentsController@getCommentsComponent')->middleware('ajax');
+	Route::post('/add-comment', 'CommentsController@addComment')->middleware(['auth', 'ajax']);
+	Route::post('/drop-comment', 'CommentsController@dropComment')->middleware(['auth', 'ajax']);
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -22,7 +22,7 @@ class PagesController extends Controller {
         }
 
         $vars = new TemplateVarsByPage('index');
-    	return view('index', [
+        return view('index', [
             'title'          => $vars->templateVar('title'),
             'caption'        => $vars->templateVar('caption_page'),
             'description'    => $vars->templateVar('description_page'),
@@ -33,7 +33,7 @@ class PagesController extends Controller {
 
     public function aboutPage() {
         $vars = new TemplateVarsByPage('about');
-    	return view('about', [            
+        return view('about', [            
             'title'          => $vars->templateVar('title'),
             'caption'        => $vars->templateVar('caption_page'),
             'description'    => $vars->templateVar('description_page'),
@@ -42,8 +42,8 @@ class PagesController extends Controller {
         ]);
     }
 
-	public function contactPage(Request $request) {
-		$vars = new TemplateVarsByPage('contact');
+    public function contactPage(Request $request) {
+        $vars = new TemplateVarsByPage('contact');
         return view('contact', [
             'title'          => $vars->templateVar('title'),
             'caption'        => $vars->templateVar('caption_page'),

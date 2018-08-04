@@ -33,31 +33,33 @@
       let selectedBlock = $(this).attr('link');
       $(selectedBlock).show();
     });
+    //if clicked post
+    selectSomePostEvent();
+    //if clicked edit
+    updatePostFormBlock();
+  };
 
+  const selectSomePostEvent = () => {
     $('.show-full-post').click(function(e) {
-      loadSelectPostDetails();
-
+      e.preventDefault();
+      let idPost = $(this).attr('link');
+      $.ajax({
+        url: '/admin/get-post',
+        type: 'GET',
+        dataType: 'json',
+        data: { idPost },
+        success: function(response) {
+          setPostDetailsElements(response);
+          showSelectedPost();
+        }
+      });    
     });
   };
 
-  const loadSelectPostDetails = new Promise((resolve, reject) => {
-    e.preventDefault();
-    let idPost = $(this).attr('link');
-
-    $.ajax({
-      url: '/admin/get-post',
-      type: 'GET',
-      dataType: 'json',
-      data: {
-        'idPost': idPost
-      },
-      success: function(response) {
-        setFullPostElements(response);
-        showSelectedPost();
-        updatePostFormBlock();
-      }
-    });    
-  };
+  const showSelectedPost = () => {
+    $('.post-manager-block').hide();
+    $('#selected-post').show();
+  }
 
   const $headerAjax = () => {
     $.ajaxSetup({
@@ -67,7 +69,7 @@
     });
   };
 
-  const setFullPostElements = (post) => {
+  const setPostDetailsElements = (post) => {
     $('#selected-title-post').text(post.title);
     $('#selected-subtitle-post').text(post.subTitle);
     $('#selected-post-text').text(post.post);
@@ -106,7 +108,7 @@
           post
         },
         success: function() {
-          getPostManager();
+          initComponent();
         }
       });
     });
@@ -132,7 +134,7 @@
           post
         },
         success: function() {
-          getPostManager();
+          initComponent();
         }
       });
     });
@@ -154,16 +156,11 @@
         type: 'POST',
         data: { id },
         success: function() {
-          getPostManager();
+          initComponent();
         }
       });
     });
-  };  
-
-  const showSelectedPost = () => {
-    $('.post-manager-block').hide();
-    $('#selected-post').show();
-  }
+  };    
 
   //
   $(document).ready(function() {

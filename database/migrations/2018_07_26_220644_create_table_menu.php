@@ -18,6 +18,7 @@ class CreateTableMenu extends Migration
             $table->string('menu_point', 255);
             $table->string('route', 255);
             $table->integer('status');
+            $table->integer('position');
             $table->timestamps();
         });
     }

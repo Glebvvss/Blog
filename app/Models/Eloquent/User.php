@@ -29,7 +29,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Eloquent\Post');
     }
 
-    public function roles() {
-        return $this->belongsToMany('App\Models\Eloquent\Role');
+    public function role() {
+        return $this->belongsTo('App\Models\Eloquent\Role');
     }
 }

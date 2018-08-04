@@ -8,7 +8,7 @@ use App\Models\CRUDCommentsOperations;
 
 class CommentsController extends Controller {
 
-    public function getCommentsComponent(Request $request) {
+    public function getComments(Request $request) {
         $crud = new CRUDCommentsOperations();
         $treeComments = $crud->getTreeCommentsByPost($request->idPost);
         return view('single-post-components.comments', [

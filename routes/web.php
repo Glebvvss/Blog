@@ -18,13 +18,27 @@ Route::group(['as' => 'auth'], function() {
 });
 
 Route::group(['as' => 'index'], function() {
-	Route::get('/get-list-of-posts-component', 'PostController@getListOfPostsComponent')->middleware('ajax');
+	Route::get('/get-posts', 'PostController@getPosts')->middleware('ajax');
 });
 
-Route::group(['as' => 'comments.'], function() {
-	Route::get('/get-comments-component', 'CommentsController@getCommentsComponent')->middleware('ajax');
+Route::group(['as' => 'comments-component.'], function() {
+	Route::get('/get-comments', 'CommentsController@getComments')->middleware('ajax');
 	Route::post('/add-comment', 'CommentsController@addComment')->middleware(['auth', 'ajax']);
 	Route::post('/drop-comment', 'CommentsController@dropComment')->middleware(['auth', 'ajax']);
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix' => '/admin'], function() {
+	Route::get('/', 'Admin\PagesController@indexPage');
+	Route::get('/get-page-manager', 'Admin\PageManagerController@getManager');
+	Route::get('/get-menu-manager', 'Admin\MenuController@getManager');
+	Route::get('/get-user-manager', 'Admin\UserController@getManager');
+
+	//posts
+	Route::get('/get-post-manager', 'Admin\PostManagerController@getManager');
+	Route::get('/get-post', 'Admin\PostManagerController@getPost');
+	Route::get('/get-posts', 'Admin\PostManagerController@getPosts');
+	Route::get('/posts-pagination', 'Admin\PostManagerController@pagination');
+	Route::post('/add-post', 'Admin\PostManagerController@add');
+	Route::post('/update-post', 'Admin\PostManagerController@update');
+	Route::post('/drop-post', 'Admin\PostManagerController@drop');
+});

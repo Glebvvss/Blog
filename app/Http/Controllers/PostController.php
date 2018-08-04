@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Eloquent\Post;
-use DateTime;
+use App\Http\Requests\ListOfPostsRequest;
 
 class PostController extends Controller {
-    
-    public function getListOfPostsComponent() {
-        $posts = Post::with('user')->orderBy('date_post', 'desc')->get();
-        return view('index-components.list-of-posts', [
+
+    public function getPosts(ListOfPostsRequest $request) {
+        $posts = Post::with('user')->orderBy('date_post', 'desc')
+        						   ->skip($request->firstIdPostPerPage)
+        						   ->take($request->countPostsPerPage)
+        						   ->get();
+
+        return view('index-components.posts', [
             'posts' => $posts
         ]);
-    }
-
-    public function getMorePosts() {
-
     }
 
 }

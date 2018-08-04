@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableGlobalVars extends Migration
+class CreatePagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateTableGlobalVars extends Migration
      */
     public function up()
     {
-        Schema::create('global_vars', function (Blueprint $table) {
+        Schema::create('pages', function (Blueprint $table) {
             $table->increments('id')->autoIncrement();
-            $table->string('var_name', 255)->unique();
-            $table->text('var_value');
+            $table->string('page_name');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateTableGlobalVars extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('global_vars');
+        Schema::dropIfExists('pages');
     }
 }

@@ -9,16 +9,23 @@ class PostPageSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-        DB::table('post_page')->insert([
+    public function run() {
+
+        $row = DB::table('pages')->where('page_name', '=', 'single-post')->first();
+        $page_id = $row->id;
+
+        DB::table('tpl_vars_per_page')->insert([
+            'page_id' => $page_id,
         	'var_name' => 'title',
-        	'var_value' => 'Blog | Post'
+        	'var_value' => 'Blog | Post',
+            'var_type' => 'text'
         ]);        
 
-        DB::table('post_page')->insert([
+        DB::table('tpl_vars_per_page')->insert([
+            'page_id' => $page_id,
         	'var_name' => 'background_img',
-        	'var_value' => 'img/post-bg.jpg'
+        	'var_value' => 'img/post-bg.jpg',
+            'var_type' => 'file'
         ]);
     }
 }

@@ -1,95 +1,109 @@
-$('document').ready(function() {
-	showComments();
-});
+(function( $ ) {
+  $(document).ready(function() {
 
-function showComments() {
-	var idPost = $('#blog-post').attr('post-number');
-	$.ajax({
-		'url': '/get-comments-component',
-		'type': 'GET',
-		'data': {
-			'idPost': idPost
-		},
-		'success': function(component) {
-			$('#comments').html(component);
-			hideAndShowSubCommentForm();
-			dropComment();
-			addComment();
-		}
-	});
-}
+    const
+        $idPost           = $('#blog-post').attr('post-number'),
+        $document         = $(document),
+        $commentsElement  = $('#comments');
 
-function hideAndShowSubCommentForm() {
-	$('.reply').click(function(e) {
-		e.preventDefault();
-		var idComment = $(this).attr('id-comment-form-show');
-		$('#show-form-' + idComment).show();							
-	});
+    //initialization component function call at the end of the module
+    const initComponent = () => {
+      $.ajax({
+        url: '/get-comments',
+        type: 'GET',
+        data: {
+          idPost: $idPost
+        },
+        success: function(response) {
+          $commentsElement.html(response);
+          initEvents();
+        }
+      });
+    };
 
-	$(document).mouseup(function (e) {
-		var container = $('.sub-comment-form');
-			if (container.has(e.target).length === 0) {
-				container.hide();
-			}
-	});
-}
+    //all functions of initialization events have have postfix named Event
+    const initEvents = () => {
+      showSubCommentFormEvent();
+      hideSubCommentFormEvent();
+      dropCommentEvent();
+      addCommentEvent();
+    }
 
-function addComment() {
-	$('.add-btn-comment').click(function(e) {
-		e.preventDefault();
-		var idParentComment = $(this).attr('id-parent-comment');
-		var comment = textComment(idParentComment);
-		var postId = $('#blog-post').attr('post-number');
+    const $headersAjax = () => {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('#token').attr('token-value')
+        }
+      });
+    };
 
-		$.ajaxSetup({
-			headers: {
-					'X-CSRF-TOKEN': $('#token').attr('token-value')
-			}
-		});		
+    const textComment = (idParentComment) => {
+      if ( idParentComment == 0 ) {
+        return $('#main-comment').val();
+      }
+      return $('#subcomment-by-' + idParentComment).val();
+    };
 
-		$.ajax({
-			'url': '/add-comment',
-			'type': 'POST',
-			'data': {
-				'idParentComment': idParentComment,
-				'comment': comment,
-				'postId': postId,
-			},
-			'success': function() {
-				showComments();
-			}
-		});
-	});
-}
+    const showSubCommentFormEvent = () => {
+      $('.reply').click(function(e) {
+        e.preventDefault();
+        let idComment = $(this).attr('id-comment-form-show');
+        $('#show-form-' + idComment).show();              
+      });
+    };
 
-function dropComment() {
-	$('.delete-comment').click(function(e) {
-		e.preventDefault();
-		var idComment = $(this).attr('id-delete-comment');		
+    const hideSubCommentFormEvent = () => {
+      $document.mouseup(function (e) {
+        let container = $('.sub-comment-form');      
+        if (container.has(e.target).length === 0) {
+          container.hide();
+        }
+      });
+    };  
 
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('#token').attr('token-value')
-			}
-		});
+    const addCommentEvent = () => {
+      $('.add-btn-comment').click(function(e) {
+        e.preventDefault();
+        let 
+            idParentComment = $(this).attr('id-parent-comment'),
+            comment = textComment(idParentComment);
 
-		$.ajax({
-			'url': '/drop-comment',
-			'type': 'POST',
-			'data': {
-				'idComment': idComment
-			},
-			'success': function() {
-				showComments();
-			}
-		});
+        $headersAjax();
+        $.ajax({
+          url: '/add-comment',
+          type: 'POST',
+          data: {
+            idParentComment: idParentComment,
+            comment: comment,
+            postId: $idPost,
+          },
+          success: function() {
+            initComponent();
+          }
+        });
+      });
+    };
 
-	});
-}
+    const dropCommentEvent = () => {
+      $('.delete-comment').click(function(e) {
+        e.preventDefault();
+        let idComment = $(this).attr('id-delete-comment');
 
-function textComment(idParentComment) {
-	if ( idParentComment == 0 ) {
-		return $('#main-comment').val();
-	}
-	return $('#subcomment-by-' + idParentComment).val();
-}
+        $headersAjax();
+        $.ajax({
+          url: '/drop-comment',
+          type: 'POST',
+          data: {
+            idComment
+          },
+          success: function() {
+            initComponent();
+          }
+        });
+      });
+    };
+
+    //defaulr init component start
+    initComponent();
+  });
+})( jQuery );

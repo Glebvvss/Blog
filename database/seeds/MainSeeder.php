@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class BaseSeeder extends Seeder
+class MainSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,9 +12,12 @@ class BaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+        	PagesSeeder::class,
+            PageVarsSeeder::class,
+        	MenuSeeder::class,
         	RoleSeeder::class,
         	UserSeeder::class,
-        	PostSeeder::class,
+        	PostSeeder::class
         ]);
     }
 }

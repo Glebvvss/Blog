@@ -14,12 +14,13 @@ use Mail;
 class AuthController extends Controller {
 
     public function login(Request $request) {
+        $request->flashOnly('email');
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required'
         ]);
-
-        $request->flashOnly('email');
+        
         $validator->after(function($validator) use ($request) {
             if ( !Auth::attempt(['email' => $request->email, 'password' => $request->password]) ) {
                 $validator->errors()->add('password', 'Incorrect email or password!');
@@ -40,14 +41,15 @@ class AuthController extends Controller {
     }
 
     public function registration(Request $request) {
+        $request->flashOnly(['name', 'email']);
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
             'confirm_password' => 'required',
         ]);
-
-        $request->flashOnly(['name', 'email']);
+        
         $validator->after(function($validator) use ($request) {
             if ( $request->password !== $request->confirm_password ) { 
                 $validator->errors()->add('password', 'Passwords does not match!');

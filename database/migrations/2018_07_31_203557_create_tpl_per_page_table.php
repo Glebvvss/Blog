@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableUserRole extends Migration
+class CreateTplPerPageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateTableUserRole extends Migration
      */
     public function up()
     {
-        Schema::create('user_role', function (Blueprint $table) {
+        Schema::create('tpl_vars_per_page', function (Blueprint $table) {
             $table->increments('id')->autoIncrement();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('role_id');
+            $table->unsignedInteger('page_id');
+            $table->string('var_name', 255);
+            $table->text('var_value');
+            $table->string('var_type', 255);
+            $table->unique(['page_id', 'var_name']);
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateTableUserRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('tpl_vars_per_page');
     }
 }

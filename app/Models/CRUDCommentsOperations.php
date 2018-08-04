@@ -13,6 +13,7 @@ class CRUDCommentsOperations {
 	public function getTreeCommentsByPost($idPost) {
 		$comments = Comment::with('user')
                     ->where('post_id', '=', $idPost)
+                    ->orderBy('id', 'desc')
                     ->get()
                     ->toArray();
 

@@ -5,72 +5,70 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Eloquent\User;
 use App\Models\Eloquent\Post;
-use Datetime;
-use DB;
-use App\Models\TemplateVarsByPage;
+use App\Models\TemplateManager;
 
 class PagesController extends Controller {
 
-    public function indexPage() {
-        $vars = new TemplateVarsByPage('index');
+    public function indexPage() {        
+        $tpl = new TemplateManager('index');
         return view('index', [
-            'title'          => $vars->templateVar('title'),
-            'caption'        => $vars->templateVar('caption_page'),
-            'description'    => $vars->templateVar('description_page'),
-            'background_img' => $vars->templateVar('background_img'),
+            'title'          => $tpl->getVar('title'),
+            'caption'        => $tpl->getVar('caption_page'),
+            'description'    => $tpl->getVar('description_page'),
+            'background_img' => $tpl->getVar('background_img'),
         ]);
     }
 
     public function aboutPage() {
-        $vars = new TemplateVarsByPage('about');
+        $tpl = new TemplateManager('about');
         return view('about', [            
-            'title'          => $vars->templateVar('title'),
-            'caption'        => $vars->templateVar('caption_page'),
-            'description'    => $vars->templateVar('description_page'),
-            'background_img' => $vars->templateVar('background_img'),
-            'about_us'       => $vars->templateVar('about_us'),
+            'title'          => $tpl->getVar('title'),
+            'caption'        => $tpl->getVar('caption_page'),
+            'description'    => $tpl->getVar('description_page'),
+            'background_img' => $tpl->getVar('background_img'),
+            'about_us'       => $tpl->getVar('about_us'),
         ]);
     }
 
     public function contactPage(Request $request) {
-        $vars = new TemplateVarsByPage('contact');
+        $tpl = new TemplateManager('contact');
         return view('contact', [
-            'title'          => $vars->templateVar('title'),
-            'caption'        => $vars->templateVar('caption_page'),
-            'description'    => $vars->templateVar('description_page'),
-            'background_img' => $vars->templateVar('background_img'),
+            'title'          => $tpl->getVar('title'),
+            'caption'        => $tpl->getVar('caption_page'),
+            'description'    => $tpl->getVar('description_page'),
+            'background_img' => $tpl->getVar('background_img'),
         ]);
     }
 
     public function singlePostPage($id) {
         $post = Post::find($id);
-        $vars = new TemplateVarsByPage('post');        
+        $tpl = new TemplateManager('single-post');
         return view('single-post', [
-            'title'          => $vars->templateVar('title'),
+            'title'          => $tpl->getVar('title'),
             'caption'        => $post->title,
             'description'    => $post->sub_title,
-            'background_img' => $vars->templateVar('background_img'),
+            'background_img' => $tpl->getVar('background_img'),
             'post'           => $post
         ]);
     }
 
     public function loginPage(Request $request) {
-        $vars = new TemplateVarsByPage('login');
+        $tpl = new TemplateManager('login');
         return view('login', [
-            'title'          => $vars->templateVar('title'),
-            'caption'        => $vars->templateVar('caption_page'),
-            'description'    => $vars->templateVar('description_page'),
-            'background_img' => $vars->templateVar('background_img'),
+            'title'          => $tpl->getVar('title'),
+            'caption'        => $tpl->getVar('caption_page'),
+            'description'    => $tpl->getVar('description_page'),
+            'background_img' => $tpl->getVar('background_img'),
         ]);
     }
 
     public function registrationPage() {
-        $vars = new TemplateVarsByPage('registration');
+        $tpl = new TemplateManager('registration');
         return view('registration', [
-            'title'          => $vars->templateVar('title'),
-            'caption'        => $vars->templateVar('caption_page'),
-            'description'    => $vars->templateVar('description_page'),
-            'background_img' => $vars->templateVar('background_img'),
+            'title'          => $tpl->getVar('title'),
+            'caption'        => $tpl->getVar('caption_page'),
+            'description'    => $tpl->getVar('description_page'),
+            'background_img' => $tpl->getVar('background_img'),
         ]);
     }
 

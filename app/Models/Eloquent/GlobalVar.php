@@ -4,7 +4,7 @@ namespace App\Models\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BasicViewVar extends Model
+class GlobalVar extends Model
 {
-    protected $table = 'basic_view_vars';
+    protected $table = 'global_vars';
 }

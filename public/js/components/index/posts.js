@@ -33,7 +33,7 @@ $(document).ready(function() {
     });
   };
 
-  //init  
+  //init
   showPosts();
   showMore();
   

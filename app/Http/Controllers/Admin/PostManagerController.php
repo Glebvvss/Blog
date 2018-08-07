@@ -24,6 +24,7 @@ class PostManagerController extends Controller {
 		} else {
 			$skipRows = 0;
 		}
+		
 		$posts = Post::orderBy('id', 'desc')->skip($skipRows)->take(3)->get();
 		return view('admin.index-components.list-of-posts', [
 			'posts' => $posts

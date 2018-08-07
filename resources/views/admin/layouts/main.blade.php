@@ -15,6 +15,7 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ asset( 'vendor/bootstrap/css/bootstrap.min.css' ) }}" rel="stylesheet">
     <link href="{{ asset('vendor/jqPagination/jqpagination.css') }}" rel="stylesheet">
+    <link href="{{ asset( 'css/my-admin-styles.css' ) }}" rel="stylesheet">
 
     <link href="{{ asset('vendor/SimplePagination/simplePagination.css') }}" rel="stylesheet">
   </head>
@@ -24,7 +25,7 @@
 
     @section('header')    
     <div>
-      <h1 class="text-center">AdminPanel</h1>
+      <h1 class="text-center header">AdminPanel</h1>
     </div>
     @show  
 
@@ -32,9 +33,9 @@
     @show
 
     @section('footer')
-    <div style="width: 100%; height: 50px; background-color: grey;">
+    <div style="width: 100%; height: 50px; background-color: #666; margin-top: 30px;">
     </div>
-    @endsection
+    @show
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

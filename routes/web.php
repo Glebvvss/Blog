@@ -5,8 +5,6 @@ Route::group(['as' => 'pages'], function() {
 	Route::get('/single-post/{id}', 'PagesController@singlePostPage')->where(['id' => '[0-9]+']);
 	Route::get('/about', 'PagesController@aboutPage');
 	Route::get('/contact', 'PagesController@contactPage');
-
-	//routes to auth pages
 	Route::get('/login', 'PagesController@loginPage');
 	Route::get('/registration', 'PagesController@registrationPage');
 });
@@ -27,18 +25,22 @@ Route::group(['as' => 'comments-component.'], function() {
 	Route::post('/drop-comment', 'CommentsController@dropComment')->middleware(['auth', 'ajax']);
 });
 
-Route::group(['prefix' => '/admin'], function() {
+Route::group(['prefix' => '/admin'], function() {	
 	Route::get('/', 'Admin\PagesController@indexPage');
-	Route::get('/get-page-manager', 'Admin\PageManagerController@getManager');
-	Route::get('/get-menu-manager', 'Admin\MenuController@getManager');
-	Route::get('/get-user-manager', 'Admin\UserController@getManager');
 
-	//posts
+	//components
+	Route::get('/get-page-manager', 'Admin\PageManagerController@getManager');
+	Route::get('/get-user-manager', 'Admin\UserController@getManager');
 	Route::get('/get-post-manager', 'Admin\PostManagerController@getManager');
+
+	//posts	
 	Route::get('/get-post', 'Admin\PostManagerController@getPost');
 	Route::get('/get-posts', 'Admin\PostManagerController@getPosts');
 	Route::get('/posts-pagination', 'Admin\PostManagerController@pagination');
 	Route::post('/add-post', 'Admin\PostManagerController@add');
 	Route::post('/update-post', 'Admin\PostManagerController@update');
 	Route::post('/drop-post', 'Admin\PostManagerController@drop');
+
+	//users
+	Route::get('/change-role', 'Admin\UserController@changeRole');
 });

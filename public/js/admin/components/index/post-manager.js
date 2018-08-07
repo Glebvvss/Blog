@@ -24,7 +24,7 @@
   };
 
   const showDefaultBlockEvent = () => {
-    $('#new-post').show();
+    $('#list-of-posts').show();
   };
 
   const showSelectedBlockEvent = () => {
@@ -94,9 +94,9 @@
     $('#add-btn-post').click(function(e) {
       e.preventDefault();
       let 
-          title = $('#add-post-title').val();
+          title    = $('#add-post-title').val();
           subTitle = $('#add-post-subtitle').val();
-          post = $('#add-post-text').val();      
+          post     = $('#add-post-text').val();      
 
       $headerAjax();
       $.ajax({
@@ -118,10 +118,10 @@
     $('#update-post-btn').click(function(e) {
       e.preventDefault();
       let 
-          id = $('#update-form-id-field').val();
-          title = $('#update-form-title-field').val();
-          subTitle = $('#update-form-subtitle-field').val();
-          post = $('#update-form-post-field').val();
+          id        = $('#update-form-id-field').val();
+          title     = $('#update-form-title-field').val();
+          subTitle  = $('#update-form-subtitle-field').val();
+          post      = $('#update-form-post-field').val();
 
       $headerAjax();
       $.ajax({
@@ -145,9 +145,7 @@
       e.preventDefault();
       let dropConfirm = confirm("Are You Sure?");
 
-      if ( dropConfirm == false ) {
-        return;
-      }
+      if ( dropConfirm == false ) return;
 
       let id = $('#drop-post-btn').attr('id-post');
       $headerAjax();
